@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "723136509159",
+    "firebase_url": "https://fogponic-1869e-default-rtdb.firebaseio.com",
+    "project_id": "fogponic-1869e",
+    "storage_bucket": "fogponic-1869e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723136509159:android:1cfb5fb2f2b2e2d2df5e42",
+        "android_client_info": {
+          "package_name": "com.example.fogponic_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723136509159-4tjkjmp4p33s68irnkgn2uehetlf5miu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLuoshPMbQlFNoyFDId08TTRBw3oJD7QA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723136509159-4tjkjmp4p33s68irnkgn2uehetlf5miu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

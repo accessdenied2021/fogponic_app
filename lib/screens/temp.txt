@@ -1,0 +1,107 @@
+return Scaffold(
+      body: StreamBuilder(
+          stream: dbRef.child("Air_Temperature").onValue,
+          builder: (context, snapshot) {
+            if (snapshot.hasData &&
+                !snapshot.hasError &&
+                snapshot.data?.snapshot.value != null) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.clear_all,
+                          color: Colors.black,
+                        ),
+                        Text(
+                          "Smart Fogponics System Dashboard",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Icons.settings),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          // Air Temperature
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Air Temperature",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              (snapshot.data!.snapshot.value ??
+                                      ["Air_Temperature"] as String)
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    children: [
+                      // Water Temperature
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Water Temperature",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "24",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FloatingActionButton.extended(
+                    onPressed: () {
+                      onUpdate();
+                      //Firebase
+                      writeData();
+                    },
+                    label:
+                        value ? Text("Grow Light OFF") : Text("Grow Light ON"),
+                    elevation: 20,
+                    backgroundColor: value
+                        ? Color.fromARGB(255, 119, 107, 0)
+                        : Colors.yellow,
+                  )
+                ],
+              );
+            } else {
+              return Container();
+            }
+          }),
+    );
