@@ -19,49 +19,19 @@ class LeafAI extends StatefulWidget {
 class _LeafAIState extends State<LeafAI> {
   File? _image;
   List<dynamic>? _predictions;
+  final picker = ImagePicker();
 
-  Future<void> _getImageFromGallery() async {
-    var status = await Permission.photos.request();
-    if (status.isGranted) {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile =
-          await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        setState(() {
-          _image = File(pickedFile.path);
-        });
-        print(
-            'Image path: ${_image?.path}'); // Add this line to print the image path
+  Future<void> _getImage(ImageSource source) async {
+    final pickedFile = await picker.getImage(source: source);
 
-        await runObjectDetection();
-      }
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Permission Required'),
-            content: const Text(
-                'Please enable access to the photo library in the app settings.'),
-            actions: [
-              TextButton(
-                child: const Text('Open Settings'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  openAppSettings();
-                },
-              ),
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+
+      print('Image path: ${_image?.path}');
     }
+    await runObjectDetection();
   }
 
   Future<void> runObjectDetection() async {
@@ -119,9 +89,13 @@ class _LeafAIState extends State<LeafAI> {
       body: Center(
         child: Column(
           children: [
+             ElevatedButton(
+              onPressed: () => _getImage(ImageSource.gallery),
+              child: Text('Pick Image from Gallery'),
+            ),
             ElevatedButton(
-              onPressed: _getImageFromGallery,
-              child: const Text('Select Image'),
+              onPressed: () => _getImage(ImageSource.camera),
+              child: Text('Take Picture'),
             ),
             const SizedBox(height: 16),
             if (_image != null)
